@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text,StyleSheet} from 'react-native';
-import ComponentScreen from './screen/componentScreen';
+import ListScreen from './screen/listScreen';
 
 
 export default function Auth() {
@@ -10,13 +10,13 @@ export default function Auth() {
             <Text>Auth Component</Text>
             <Text style={styles.textStyle}>Getting started with React Native</Text>
             <Text styles={{fontSize:20}}>My name is {name}</Text>
-            <ComponentScreen />
+            <ListScreen />
         </View>
     )
 }
 
 const styles=StyleSheet.create({
     textStyle:{
-        fontSize: 40
+        fontSize: 10
     }
 })
