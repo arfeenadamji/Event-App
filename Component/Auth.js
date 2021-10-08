@@ -2,7 +2,7 @@ import React from 'react';
 import {View, Text,StyleSheet,Button,TouchableOpacity} from 'react-native';
 import ListScreen from  './screen/listScreen';
 
-
+// export default function Auth({navigation})
 export default function Auth(props) {
     console.log(props)
     const name="Arfeen"
@@ -15,6 +15,7 @@ export default function Auth(props) {
             onPress={() => props.navigation.navigate('list')}
             title="Go to component "/>
             <TouchableOpacity onPress={() => props.navigation.navigate('list')}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate('list')}> */}
                 <Text>Go to list Demo</Text>
             </TouchableOpacity>
         </View>
