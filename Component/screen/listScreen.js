@@ -2,6 +2,7 @@ import React from "react";
 import {View, Text, StyleSheet, FlatList} from 'react-native';
 
 export default function ListScreen(){
+
     const friends = [
         {name:'Friend-1' , age:'Age-20'},
         {name:'Friend-2' , age:'Age-20'},
