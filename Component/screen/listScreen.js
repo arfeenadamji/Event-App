@@ -1,8 +1,9 @@
 import React from "react";
-import {View, Text, StyleSheet, FlatList} from 'react-native';
+import {View, Text, StyleSheet, FlatList,TouchableOpacity} from 'react-native';
 
-export default function ListScreen(){
-
+// export default function Auth({navigation})
+export default function ListScreen(props){
+// console.log(props)
     const friends = [
         {name:'Friend-1' , age:'Age-20'},
         {name:'Friend-2' , age:'Age-20'},
@@ -17,12 +18,18 @@ export default function ListScreen(){
     ];
     
     return(
+        <View>
         <FlatList 
         keyExtractor={friend => friend.name}
         data={friends} renderItem={({item}) =>{
             return <Text>{item.name} - {item.age}</Text>
             // <Text></Text>
         }}></FlatList>
+        <TouchableOpacity onPress={() => props.navigation.navigate('list')}>
+            {/* <TouchableOpacity onPress={() => navigation.navigate('list')}> */}
+                <Text>Go to list Demo</Text>
+            </TouchableOpacity>
+        </View>
     )
 } 
 
