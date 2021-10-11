@@ -4,11 +4,13 @@ import Auth from './Component/Auth';
 import ListScreen from './Component/screen/listScreen';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
+import Register from './Component/screen/register';
 
 const navigator = createStackNavigator(
   {
     Auth: Auth,
-    list: ListScreen
+    list: ListScreen,
+    Register: Register
   },
   {
   initialRouteName:'Auth',
