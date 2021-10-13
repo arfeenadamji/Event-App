@@ -5,12 +5,14 @@ import ListScreen from './Component/screen/listScreen';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createAppContainer } from 'react-navigation';
 import Register from './Component/screen/register';
+import ProfileScreen from './Component/screen/profileScreen';
 
 const navigator = createStackNavigator(
   {
     Auth: Auth,
     list: ListScreen,
-    Register: Register
+    Register: Register,
+    Profile: ProfileScreen
   },
   {
   initialRouteName:'Auth',

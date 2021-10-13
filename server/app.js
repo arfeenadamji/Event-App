@@ -2,6 +2,8 @@ const express = require('express');
 const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
+const bcrypt = require('bcryptjs');
+const saltRounds = 10
 
 const User = require('./models/user')
 app.use(bodyParser.json())
@@ -20,26 +22,58 @@ mongoose.connection.on('error', (err) =>{
 app.get('/', (req,res) =>{
     res.send("Welcome to node js")
 })
+
+// new user
 app.post('/register',async (req,res) =>{
-   
-    // new user
     let newUser  =  new User()
     newUser.email = req.body.email    
-    newUser.password = req.body.pass // password from backend, body.pass=> from register component that we pass on req body
+    // newUser.password = req.body.pass // password from backend, body.pass=> from register component that we pass on req body
+    console.log('req.body',req.body)
+   newUser.password = await bcrypt.hash(req.body.pass,10)
+    newUser.firstName = req.body.firstName
+    newUser.lastName = req.body.lastName
     newUser.save((err,doc)=>{
+        
         console.log(err)
         console.log('doc',doc)
     });
     console.log(req.body)
-    
     res.send("Welcome to app")
-})
+});
+
 //validate User
 app.post('/login',async (req,res) =>{
-    console.log("req.body",req.body)
-    await User.find({email:req.body.email,password:req.body.pass}).exec((err,resp)=>{
+    console.log("req.body123",req.body)
+    await User.find({email:req.body.email}).exec(async(err,resp)=>{
         if(err){
             console.log('err finding',err)
+        }
+        else{
+            if(resp.length > 0){
+                console.log('user123',resp[0].password)
+                let ismatch = bcrypt.compareSync(req.body.pass, resp[0].password)
+                if(ismatch){
+                   return res.send({message:'user exist',status:true,data:resp})
+                    
+                }else{
+                   return res.send({message:'invalid password',status:false,data:resp})
+
+                }
+             }else{
+                res.send({message:'user not found',status:false,data:resp})
+            }
+        }
+    })
+ })
+
+
+
+// updateUser
+ app.post('/updateUser',async (req,res) =>{
+    console.log("req.body of updatee user",req.body)
+    await User.findOneAndUpdate({_id:req.body.id},{...req.body},{new:true}).exec((err,resp)=>{
+        if(err){
+            console.log('err finding from',err)
         }
         else{
             console.log('user authenticate')
@@ -72,8 +106,6 @@ app.post('/login',async (req,res) =>{
     })
  })
 
-
 app.listen(3000,() =>{
     console.log('server start')
 });
-
