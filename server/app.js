@@ -20,7 +20,7 @@ mongoose.connection.on('error', (err) =>{
 });
 
 app.get('/', (req,res) =>{
-    res.send("Welcome to node js")
+    res.send("Welcome to node js ec2")
 })
 
 // new user
