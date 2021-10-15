@@ -39,7 +39,7 @@ export default function ProfileScreen(props) {
         .then(response => response)
         .then(data =>{
             console.log('profileData', data.data)
-        }).catch(err=>console.log("err",err))
+        }).catch(err=>console.log("eprofile Objectrr",err))
     }
     return(
         <View>

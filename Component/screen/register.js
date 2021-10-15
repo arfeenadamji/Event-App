@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { View, TextInput, Text, Button, StyleSheet } from "react-native";
 import backendUrl from "../enviroment";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 export default function Register(props) {
   const [firstName, setFirstName] = useState("");
@@ -8,6 +10,7 @@ export default function Register(props) {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
 
+  const value="hello"
   const getElement = async () => {
     props.navigation.navigate("list");
   };
@@ -90,7 +93,6 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    // flex:1
   },
   input: {
     height: 40,

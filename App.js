@@ -3,7 +3,7 @@ import React from 'react';
 import Auth from './Component/Auth';
 import ListScreen from './Component/screen/listScreen';
 import { createStackNavigator } from 'react-navigation-stack';
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer,createSwitchNavigator} from 'react-navigation';
 import Register from './Component/screen/register';
 import ProfileScreen from './Component/screen/profileScreen';
 

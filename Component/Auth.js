@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from 'react-native';
-// import { Input } from 'react-native-elements';
 import backendUrl  from '../Component/enviroment'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export default function Auth(props) {
-    // console.log(props);
     const [email, setEmail] = useState('hello@test.com')
     const [pass, setPass] = useState('test123')
     const [firstName, setFirstName] = useState('')
@@ -19,9 +18,15 @@ export default function Auth(props) {
         };
         await fetch(`${backendUrl}/login`, requestOptions)
         .then(response => response.json())
-            .then(data => {
-                console.log('data', data)
+            .then (async data => {
+                console.log('data from auth', data)
+                // console.log('data from auth', data.data[0]._id)
                 if (data.status == true) {
+                         try {
+                          await AsyncStorage.setItem('mongodb-id', data.data[0]._id)
+                        } catch (e) {
+                         console.log("error from aysnc",e )
+                        }
                     props.navigation.navigate('Profile',{profile:data})
                     console.log("user already created")
                 } else {
@@ -35,6 +40,7 @@ export default function Auth(props) {
             <TextInput
                 placeholder="Email"
                 autoCapitalize='none'
+                value={email}
                 style={styles.inputEmail}
                 onChangeText={(email) => setEmail(email)}
             />
@@ -42,6 +48,7 @@ export default function Auth(props) {
             <TextInput
                 placeholder="Password"
                 autoCapitalize='none'
+                value={pass}
                 style={styles.inputPassword}
                 onChangeText={(p) => setPass(p)}
             />
