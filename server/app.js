@@ -112,6 +112,11 @@ app.post('/login',async (req,res) =>{
      newEvent.eventDate = req.body.date
      newEvent.eventTime = req.body.eventTime
      newEvent.eventFee = req.body.fee
+    //  console.log('req.body for event' req.body)
+    newEvent.save((err, doc) =>{
+        console.log(err)
+        console.log('doc', doc)
+    });
  })
 
 app.listen(3000,() =>{
