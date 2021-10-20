@@ -81,12 +81,10 @@ export default function ProfileScreen(props) {
         title="Update User"
         onPress={() => updateUser()}
         />
-        <View 
-                style={{
-                    paddingTop:19
-                }}
-            />
+        <View style={{paddingTop:19 }}/>
  <Button onPress={() => getElement()} title="View User" />
+ <View style={{paddingTop:19 }}/>
+ {/* <Button title="drawer" onPress={()=>props.navigation.navigate('HomeStack')}/> */}
     </View>
 )
 }

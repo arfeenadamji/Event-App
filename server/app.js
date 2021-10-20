@@ -3,9 +3,11 @@ const app = express()
 const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs');
-const saltRounds = 10
 
 const User = require('./models/user')
+app.use(bodyParser.json())
+
+const Event = require('./models/event')
 app.use(bodyParser.json())
 
 const mongooseUrl = "mongodb+srv://Arfeen:abcd1234@cluster0.spvug.mongodb.net/test"; 
@@ -33,7 +35,6 @@ app.post('/register',async (req,res) =>{
     newUser.firstName = req.body.firstName
     newUser.lastName = req.body.lastName
     newUser.save((err,doc)=>{
-        
         console.log(err)
         console.log('doc',doc)
     });
@@ -53,11 +54,9 @@ app.post('/login',async (req,res) =>{
                 console.log('user123',resp[0].password)
                 let ismatch = bcrypt.compareSync(req.body.pass, resp[0].password)
                 if(ismatch){
-                   return res.send({message:'user exist',status:true,data:resp})
-                    
+                   return res.send({message:'user exist',status:true,data:resp})       
                 }else{
                    return res.send({message:'invalid password',status:false,data:resp})
-
                 }
              }else{
                 res.send({message:'user not found',status:false,data:resp})
@@ -65,8 +64,6 @@ app.post('/login',async (req,res) =>{
         }
     })
  })
-
-
 
 // updateUser
  app.post('/updateUser',async (req,res) =>{
@@ -104,6 +101,17 @@ app.post('/login',async (req,res) =>{
             }
         }
     })
+ })
+
+ // new Event
+
+ app.post('/createEvent', async(req,res) =>{
+     let newEvent = new Event()
+     newEvent.eventTitle = req.body.title
+     newEvent.eventVenue = req.body.venue
+     newEvent.eventDate = req.body.date
+     newEvent.eventTime = req.body.eventTime
+     newEvent.eventFee = req.body.fee
  })
 
 app.listen(3000,() =>{
