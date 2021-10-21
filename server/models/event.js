@@ -4,23 +4,23 @@ const eventSchema = new mongoose.Schema(
   {
     eventTitle: {
       type: String,
-      unique: true,
+      // unique: true,
       required: true,
     },
     eventVenue: {
       type: String,
-      unique: true,
+      // unique: true,
       required: true,
     },
     eventDate: {
       type: String,
-      unique: true,
+      // unique: true,
       required: true,
-      time: { type: Date, default: Date.now },
+      // time: { type: Date, default: Date.now },
     },
     eventTime: {
       type: String,
-      unique: true,
+      // unique: true,
       required: true,
     },
     eventFee: {

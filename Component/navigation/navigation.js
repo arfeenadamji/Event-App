@@ -16,10 +16,11 @@ const AuthNavigator = createStackNavigator(
   {
     Auth: Auth,
     Register: Register,
-    createEvent: CreateEvent
+    Img: Img,
+    
   },
   {
-    initialRouteName: "createEvent",
+    initialRouteName: "Auth",
     defaultNavigationOptions: {
       title: "AUTH",
       headerTintColor: "black",
@@ -30,6 +31,7 @@ const DrawerNavigator = createDrawerNavigator(
   {
     list: ListScreen,
     Profile: ProfileScreen,
+    createEvent: CreateEvent,
     Img: Img,
   },
   {

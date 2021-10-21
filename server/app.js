@@ -109,14 +109,17 @@ app.post('/login',async (req,res) =>{
      let newEvent = new Event()
      newEvent.eventTitle = req.body.title
      newEvent.eventVenue = req.body.venue
-     newEvent.eventDate = req.body.date
-     newEvent.eventTime = req.body.eventTime
      newEvent.eventFee = req.body.fee
+     newEvent.eventDate = req.body.date
+     newEvent.eventTime = req.body.time
+   
     //  console.log('req.body for event' req.body)
     newEvent.save((err, doc) =>{
-        console.log(err)
+        console.log('err form event',err)
         console.log('doc', doc)
     });
+    console.log(req.body)
+    res.send("Welcome to app")
  })
 
 app.listen(3000,() =>{
