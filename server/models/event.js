@@ -28,6 +28,10 @@ const eventSchema = new mongoose.Schema(
       // unique:true,
       required: true,
     },
+    userId:{
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "user"
+    },
   },
   { timestamps: true }
 );

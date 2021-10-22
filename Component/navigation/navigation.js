@@ -6,7 +6,9 @@ import ListScreen from "../screen/listScreen";
 import Register from "../screen/register";
 import ProfileScreen from "../screen/profileScreen";
 import Img from "../screen/img";
+
 import CreateEvent from '../Event/createEvent';
+import GetEvent from '../Event/getEvent'
 
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
@@ -16,7 +18,7 @@ const AuthNavigator = createStackNavigator(
   {
     Auth: Auth,
     Register: Register,
-    Img: Img,
+    
     
   },
   {
@@ -33,6 +35,8 @@ const DrawerNavigator = createDrawerNavigator(
     Profile: ProfileScreen,
     createEvent: CreateEvent,
     Img: Img,
+    getEvent:GetEvent
+ 
   },
   {
     initialRouteName: "list",

@@ -3,9 +3,11 @@ import { View, Text, StyleSheet, Button, TextInput } from "react-native";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import backendUrl from "../enviroment";
 import moment from 'moment';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 
-export default function CreateEvent() {
+
+export default function CreateEvent(props) {
 
   const [title, setTitle] = useState('');
   const [venue, setVenue] = useState("");
@@ -35,7 +37,7 @@ export default function CreateEvent() {
   // };
 
   const [date, setDate] = useState(new Date());
-  const [time, setTime] = useState(new Date())
+  const [time, setTime] = useState(new Date());
 
   const [isDatePickerVisible, setDatePickerVisibility] = useState(false);
 
@@ -51,12 +53,15 @@ export default function CreateEvent() {
     console.warn("A date has been picked: ", date);
     hideDatePicker();
   };
-  const CreateEvent = async () => {
 
-    console.log(date,time)
-    let newTime= new Date(time).getHours() +':'+ new Date(time).getMinutes()
-    console.log(new Date(time).getHours() +':'+ new Date(time).getMinutes())
-    // return;
+  let newTime= new Date(time).getHours() +':'+ new Date(time).getMinutes()
+  
+  const CreateEvent = async () => {
+    console.log('time',time)
+    console.log(new Date(time).getHours() +':'+ new Date(time).getMinutes() > 10 ? + 0 : new
+    Date(time).getMinutes())
+
+    let id = await AsyncStorage.getItem("mongodb-id")
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -65,10 +70,12 @@ export default function CreateEvent() {
         venue: venue,
         fee:fee,
         date:date,
-        time:newTime
+        time:newTime,
+        userId: id
       }),
     };
-
+    // console.log(id)
+    // return
     await fetch(`${backendUrl}/createEvent`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
@@ -82,8 +89,9 @@ export default function CreateEvent() {
       })
   }
   return (
-    <>
-    <View style={styles.container}>
+    <View style={{flex:1}}>
+    <View 
+    style={styles.container}>
       <Text style={{textAlign:'center'}}>Create Event</Text>
       <View style={{ flexDirection: "row" }}>
         <Text style={styles.label}>Event Title</Text>
@@ -130,12 +138,11 @@ export default function CreateEvent() {
       /> 
   </View> */}
 </View>
-      <View style={{alignItems:"center", backgroundColor:'red'}}>
+      <View style={styles.pickerContainer}>
         <DateTimePicker
           style={styles.picker}
           display="spinner"
           isVisible={isDatePickerVisible}
-          // value={date}
           value={date}
           mode="date"
           onChangeText={(date) => setDate(date)}
@@ -151,33 +158,52 @@ export default function CreateEvent() {
           value={time}
           display="spinner"
           mode="time"
-          onChange={(event,times) =>setTime(times)}
+          onChangeText={(time) => setTime(time)}
+          onChange={(event,times) =>{
+            // console.log(new Date(times))}}
+            setTime(times)}}
           onConfirm={handleConfirm}
           onCancel={hideDatePicker}
         />
+           <Text>{newTime.toString()}</Text>
+           <Text>{date.toString().substr(4, 12)}</Text>
       </View>
+      <View style={{height:'17%'}}>
       <Button
-        style={{paddingBottom:100,}}
         title="Create Event"
         onPress={() => CreateEvent()}
       />
 
-   </>
+<Button
+        title="Show Event"
+        onPress={() => props.navigation.navigate("getEvent")}
+      />
+   </View>
+   </View>
   );
 };
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
+    // flex: 1,
+    // backgroundColor: "yellow",
+
     // alignItems: "center",
+    height:'38%',
+
     paddingTop: 30,
     padding: 10,
+  },
+  pickerContainer:{
+    alignItems:'center',
+    // backgroundColor:'red',
+    // marginBottom:'100',
+    height:'45%'
   },
   picker: {
     width: '80%',
     height: '30%',
     fontSize:10,
-    backgroundColor:'yellow',
+    // backgroundColor:'yellow',
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -242,6 +268,8 @@ const styles = StyleSheet.create({
   },
   btn: {
     // margin: 100,
+    // height:'40%',
+    backgroundColor:'green',
     marginTop: -100,
     paddingTop:-100
   },
@@ -249,9 +277,5 @@ const styles = StyleSheet.create({
     textAlign: "center",
     fontSize: 30,
   },
-  btnR: {
-    // margin: 100,
-    // marginTop: 50,
-    // paddingTop: 50,
-  },
+ 
 });

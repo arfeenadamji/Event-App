@@ -26,6 +26,7 @@ export default function ListScreen(props){
             .then(data => {
                 console.log('data 12', data)
                 if (data.status == true) {
+                    console.log('data.status', data)
                     setUsers(data.data)
                     // props.navigation.navigate('list')
                     // alert('user register')

@@ -44,14 +44,14 @@ app.post('/register',async (req,res) =>{
 
 //validate User
 app.post('/login',async (req,res) =>{
-    console.log("req.body123",req.body)
+    // console.log("req.body123",req.body)
     await User.find({email:req.body.email}).exec(async(err,resp)=>{
         if(err){
             console.log('err finding',err)
         }
         else{
             if(resp.length > 0){
-                console.log('user123',resp[0].password)
+                // console.log('user123',resp[0].password)
                 let ismatch = bcrypt.compareSync(req.body.pass, resp[0].password)
                 if(ismatch){
                    return res.send({message:'user exist',status:true,data:resp})       
@@ -104,7 +104,6 @@ app.post('/login',async (req,res) =>{
  })
 
  // new Event
-
  app.post('/createEvent', async(req,res) =>{
      let newEvent = new Event()
      newEvent.eventTitle = req.body.title
@@ -112,14 +111,32 @@ app.post('/login',async (req,res) =>{
      newEvent.eventFee = req.body.fee
      newEvent.eventDate = req.body.date
      newEvent.eventTime = req.body.time
+     newEvent.userId= req.body.userId
    
-    //  console.log('req.body for event' req.body)
     newEvent.save((err, doc) =>{
         console.log('err form event',err)
         console.log('doc', doc)
     });
     console.log(req.body)
     res.send("Welcome to app")
+ })
+
+ // get Event
+ app.get('/getEvent',async (req,res) =>{
+    console.log("req.body",req.body)
+    await Event.find({userId:'61673b116b2c9011ccb20962'}).populate('userId').exec((err,resp)=>{
+        if(err){
+            console.log('err finding',err)
+        }
+        else{
+            console.log('user',resp)
+            if(resp.length > 0){
+                res.send({message:'user exist',status:true,data:resp})
+             }else{
+                res.send({message:'user not found',status:false,data:resp})
+            }
+        }
+    })
  })
 
 app.listen(3000,() =>{
