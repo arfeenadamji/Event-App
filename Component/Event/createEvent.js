@@ -62,6 +62,9 @@ export default function CreateEvent(props) {
     Date(time).getMinutes())
 
     let id = await AsyncStorage.getItem("mongodb-id")
+    // let adminId ='6173f09870b2e06b497746c4'
+    
+   
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -143,7 +146,8 @@ export default function CreateEvent(props) {
           style={styles.picker}
           display="spinner"
           isVisible={isDatePickerVisible}
-          value={date}
+          // value={date}
+          value={new Date(date)}
           mode="date"
           onChangeText={(date) => setDate(date)}
           onChange={(event,dates) => setDate(dates)}

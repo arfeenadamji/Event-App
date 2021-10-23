@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, FlatList,Text, StyleSheet, Button, TextInput } from "react-native";
 import backendUrl from '../enviroment';
+import AsyncStorage from "@react-native-async-storage/async-storage";
+
 
 export default function GetEvent(){
 const [event, setEvent] = useState('')
@@ -8,13 +10,17 @@ const [event, setEvent] = useState('')
     console.log('use Effect from getEvent')
     getEvent();
   }, [])
-
+  
   const getEvent = async () =>{
+    let id = await AsyncStorage.getItem("mongodb-id")
     const requestOptions = {
-      method:'GET',
+      method:'POST',
       headers:{'Content-Type':'application/json'},
+      body: JSON.stringify({
+        userId: id
+      })
     };
-    await fetch(`${backendUrl}/getEvent`)
+    await fetch(`${backendUrl}/getEvent`, requestOptions)
     .then (response =>response.json())
     .then(data =>{
       console.log('data form event', data.data)

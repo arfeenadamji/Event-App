@@ -122,10 +122,19 @@ app.post('/login',async (req,res) =>{
  })
 
  // get Event
- app.get('/getEvent',async (req,res) =>{
+ app.post('/getEvent',async (req,res) =>{
     console.log("req.body",req.body)
-    await Event.find({userId:'61673b116b2c9011ccb20962'}).populate('userId').exec((err,resp)=>{
-        if(err){
+    let myId = req.body.userId;
+    console.log('myId', myId)
+    let query = {}
+    if(myId){
+        query = {userId:myId}
+    }
+    console.log('userId:req.body.userId._id',myId)
+    // await Event.find({userId:'61673b116b2c9011ccb20962'}).populate('userId').exec((err,resp)=>{
+    await Event.find(query).populate('userId').exec((err,resp)=>{
+
+    if(err){
             console.log('err finding',err)
         }
         else{
