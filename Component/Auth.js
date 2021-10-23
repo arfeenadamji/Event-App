@@ -18,7 +18,12 @@ export default function Auth(props) {
     await fetch(`${backendUrl}/login`, requestOptions)
       .then((response) => response.json())
       .then(async (data) => {
-        console.log("data from auth", data);
+        // console.log("data from auth", data);
+        for(let i=0; i<data.data.length; i++){
+          console.log("data.data[0].email", data.data[i].email);
+          // console.log("data.email", data.email);  
+        }
+        
         // console.log('data from auth', data.data[0]._id)
         if (data.status == true) {
           try {
