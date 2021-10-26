@@ -13,6 +13,7 @@ import GetEvent from '../Event/getEvent'
 import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
+import OtherEvent from "../Event/otherEvent";
 
 const AuthNavigator = createStackNavigator(
   {
@@ -34,8 +35,8 @@ const DrawerNavigator = createDrawerNavigator(
     list: ListScreen,
     Profile: ProfileScreen,
     createEvent: CreateEvent,
-    Img: Img,
-    getEvent:GetEvent
+    getEvent:GetEvent,
+    otherEvent: OtherEvent
  
   },
   {
