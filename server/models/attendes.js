@@ -1,20 +1,23 @@
 const mongoose = require("mongoose")
 
 const attendesSchema = new mongoose.Schema({
-    eventId: {
-        type: string,
-        required: true
-    },
     userId: {
-        type: string,
-        required: true
+        type: mongoose.Schema.Types.ObjectId,
+        ref:"user"
+    },
+    eventId: {
+       type:mongoose.Schema.Types.ObjectId,
+       ref="event"
     },
     eventDate: {
-        type: string,
-        required: true
+        type: mongoose.Schema.Types.eventDate,
+        ref="event"
     },
-    eventtime: {
-        type: string,
-        required: true
+    eventTime: {
+        type: mongoose.Schema.Types.eventTime,
+        ref="event"
     }
-})
+
+});
+
+module.exports = mongoose.model("attendes", attendesSchema)

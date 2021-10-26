@@ -15,7 +15,6 @@ const [event, setEvent] = useState('')
     let adminId ='6173f09870b2e06b497746c4'
 
     let id = await AsyncStorage.getItem("mongodb-id")
-    // console.log('id',id.value)
     const requestOptions = {
       method:'POST',
       headers:{'Content-Type':'application/json'},

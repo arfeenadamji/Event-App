@@ -1,7 +1,39 @@
-import React from 'react';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import React, { useEffect, useState } from 'react';
 import { View, Text, StyleSheet, Button, TextInput } from "react-native";
+import backendUrl from '../enviroment';
 
 export default function OtherEvent(){
+    const [otherEvent, setOtherEvent] = useState('')
+    useEffect(() =>{
+        console.log('use Effect from Others Event')
+        getOtherEvent();
+    })
+
+    const getOtherEvent = async ()=>{
+        let id = await AsyncStorage.getItem("mongodb-id")
+        const requestOptions ={
+            method:'POST',
+            headers:{'Content-Type': 'application/json'},
+            body: JSON.stringify({ 
+                userId:id
+            })
+        };
+
+        await fetch(`${backendUrl}/otherEvent`, requestOptions)
+        .then (response =>response.json())
+    .then(data =>{
+      console.log('data form other event', data.data)
+      // console.log('data form event', data.message)
+
+      if(data.status == true){
+        setEvent(data.data)
+      }else {
+        alert(data.message)
+      }
+      
+    }).catch(err => console.log('err from getEvent', err))
+    }
   return(
       <View style={styles.container}>
           <Text>OtherEvent</Text>
