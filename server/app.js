@@ -148,6 +148,26 @@ app.post('/login',async (req,res) =>{
     })
  })
 
+  // other's Event
+  app.post('/otherEvent',async (req,res) =>{
+    console.log("req.body",req.body)
+    // await Event.find().populate('userId').exec((err,resp)=>{
+        await Event.r
+        {
+            if(err){
+            console.log('err finding',err)
+        }
+        else{
+            console.log('user',resp)
+            if(resp.length > 0){
+                res.send({message:'user exist',status:true,data:resp})
+             }else{
+                res.send({message:'user not found',status:false,data:resp})
+            }
+        }
+    })
+ })
+
 app.listen(3000,() =>{
     console.log('server start')
 });
