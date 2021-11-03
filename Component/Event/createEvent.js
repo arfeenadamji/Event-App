@@ -61,7 +61,7 @@ export default function CreateEvent(props) {
     console.log(new Date(time).getHours() +':'+ new Date(time).getMinutes() > 10 ? + 0 : new
     Date(time).getMinutes())
 
-    let id = await AsyncStorage.getItem("mongodb-id")
+    let id = await AsyncStorage.getItem("user-id")
     let adminId ='6173f09870b2e06b497746c4'
     
    

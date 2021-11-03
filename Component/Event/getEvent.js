@@ -14,7 +14,7 @@ const [event, setEvent] = useState('')
   const getEvent = async () =>{
     let adminId ='6173f09870b2e06b497746c4'
 
-    let id = await AsyncStorage.getItem("mongodb-id")
+    let id = await AsyncStorage.getItem("user-id")
     const requestOptions = {
       method:'POST',
       headers:{'Content-Type':'application/json'},
