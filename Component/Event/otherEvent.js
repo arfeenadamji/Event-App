@@ -18,11 +18,7 @@ export default function OtherEvent() {
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
-        // title:item.eventTitle,
-        // venue:item.eventVenue,
-        // fee:item.eventFee,
-        // date:item.eventDate.toString(),
-        // time:item.eventTime,
+       
         eventId:eventId,
         userId:id
 
@@ -84,8 +80,6 @@ const styles = StyleSheet.create({
     flex: 1,
     paddingLeft: 10,
     backgroundColor: '#fff',
-    // alignItems: 'center',
-    // justifyContent: 'center',
   },
   textStyle: {
     fontSize: 10,

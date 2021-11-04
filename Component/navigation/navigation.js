@@ -5,7 +5,6 @@ import Auth from "../Auth";
 import ListScreen from "../screen/listScreen";
 import Register from "../screen/register";
 import ProfileScreen from "../screen/profileScreen";
-import Img from "../screen/img";
 
 import CreateEvent from '../Event/createEvent';
 import GetEvent from '../Event/getEvent'
@@ -14,6 +13,8 @@ import { createAppContainer, createSwitchNavigator } from "react-navigation";
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { createStackNavigator } from "react-navigation-stack";
 import OtherEvent from "../Event/otherEvent";
+import Counter from "../screen/counter";
+import JoinEvent from "../Event/joinEvent";
 
 const AuthNavigator = createStackNavigator(
   {
@@ -36,7 +37,9 @@ const DrawerNavigator = createDrawerNavigator(
     Profile: ProfileScreen,
     createEvent: CreateEvent,
     getEvent:GetEvent,
-    otherEvent: OtherEvent
+    otherEvent: OtherEvent,
+    joinEvent: JoinEvent,
+    counter:Counter
  
   },
   {

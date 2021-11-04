@@ -133,10 +133,7 @@ app.post('/getEvent', async (req, res) => {
     await Event.find(query).populate({
         path: 'userId',
         populate: [
-          {
-            path: 'eventId',
-           
-          },
+          {path: 'eventId',},
         ],
       }).exec((err, resp) => {
         if (err) {
@@ -173,23 +170,9 @@ app.post('/otherEvent', async (req, res) => {
 
 //join Event
 app.post('/joinEvent', async(req,res)=>{
-    // let newEvent = new Event()
-    // newEvent.eventTitle = req.body.title
-    // newEvent.eventVenue = req.body.venue
-    // newEvent.eventFee = req.body.fee
-    // newEvent.eventDate = req.body.date
-    // newEvent.eventTime = req.body.time
-    // newEvent.eventId = req.body.eventId 
-    // newEvent.userId = req.body.userId
     console.log("req body from join Event", req.body)
-    // newEvent.save((err, doc) => {
-    //     console.log('err',err)
-    //     console.log('doc', doc)
-    // });
-
-    await User.findOne({_id:req.body.userId}).populate('eventId').exec(async (err, user) =>{
-        console.log('user from join',user, err)
-        
+  await User.findOne({_id:req.body.userId}).populate('eventId').exec(async (err, user) =>{
+        console.log('user from join',user, err)      
         if (err) {
             console.log('err finding', err)
         }
@@ -205,6 +188,7 @@ app.post('/joinEvent', async(req,res)=>{
 
 
 })
+
 
 app.listen(3000, () => {
     console.log('server start')
