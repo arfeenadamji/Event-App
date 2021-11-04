@@ -26,7 +26,7 @@ export default function Register(props) {
         lastName: lastName,
       }),
     };
-    await fetch(`${backendUrl}/Register`, requestOptions)
+    await fetch(`${backendUrl}/register`, requestOptions)
       .then((response) => response.json())
       .then((data) => {
         console.log("data", data);

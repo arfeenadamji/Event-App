@@ -22,10 +22,10 @@ const userSchema = new mongoose.Schema({
         unique:true,
         required:true
     },
-    eventId:{
+    eventId:[{
         type:mongoose.Schema.Types.ObjectId,
         ref:"event"
-    },
+    },]
 })
 
  module.exports = mongoose.model('user', userSchema);

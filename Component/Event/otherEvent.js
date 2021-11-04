@@ -10,13 +10,22 @@ export default function OtherEvent() {
     getOtherEvent();
   }, [])
 
-  const joinEvent= async() =>{
+  const joinEvent= async(item) =>{
+    let eventId= item._id
+    //  await AsyncStorage.setItem("user-id", item._id);    
     let id = await AsyncStorage.getItem("user-id")
     const requestOptions={
       method:'POST',
       headers:{'Content-Type':'application/json'},
       body:JSON.stringify({
+        // title:item.eventTitle,
+        // venue:item.eventVenue,
+        // fee:item.eventFee,
+        // date:item.eventDate.toString(),
+        // time:item.eventTime,
+        eventId:eventId,
         userId:id
+
       })
     };
     await fetch(`${backendUrl}/joinEvent`, requestOptions)
@@ -24,8 +33,8 @@ export default function OtherEvent() {
     .then(data =>{
       console.log('data from join-1 event', data)
       if (data.status == true) {
-        setOtherEvent(data.data)
-        console.log('data from join event', data.data[0]._id)
+        // setOtherEvent(data.data)
+        console.log('event Id from join event', eventId)
       } else {
         alert(data.message)
       }
@@ -52,15 +61,16 @@ export default function OtherEvent() {
       }).catch(err => console.log('err from getEvent', err))
   }
   return (
+
     <View style={styles.container}>
       <Text>OtherEvent</Text>
       <FlatList
         keyExtractor={otherEvent => otherEvent.eventTitle}
         data={otherEvent}
         renderItem={({ item }) => {
-          return <Text>Title = {item.eventTitle}{'\n'}Venue = {item.eventVenue}{'\n'}Fee= {item.eventFee}{'\n'}Date= {item.eventDate.toString().substr(4, 12)}{'\n'}Time= {item.eventTime}{'\n'}
+          return <Text>Title = {item.eventTitle}{'\n'}Venue = {item.eventVenue}{'\n'}Fee= {item.eventFee}{'\n'}Date= {item.eventDate.toString().substr(4, 12)}{'\n'}Time= {item.eventTime}{'\n'} id={item._id}{'\n'} 
             <Button
-              onPress={() => joinEvent()}
+              onPress={() => joinEvent(item)}
               title="join Event" />
           </Text>
         }}

@@ -27,9 +27,22 @@ const [event, setEvent] = useState('')
     .then(data =>{
       console.log('data form event', data.data)
       // console.log('data form event', data.message)
+      let temp = []
+      data.data.map((event)=>{
+        temp.push(event)
+        // temp.push(a)
 
+      })
+      let a = [...data.data[0].userId.eventId]
+        a.map(eve=>{
+          eve.eventTitle = eve.eventTitle+'(joined)'
+          temp.push(eve)
+        })
+
+      console.log('..a.dadahdjkasbhdjkasbhdjk',temp)
       if(data.status == true){
-        setEvent(data.data)
+        // setEvent(data.data)
+        setEvent(temp)
       }else {
         alert(data.message)
       }

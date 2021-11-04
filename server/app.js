@@ -130,7 +130,15 @@ app.post('/getEvent', async (req, res) => {
         query = { userId: myId }
     }
     console.log('userId:req.body.userId._id', myId)
-    await Event.find(query).populate('userId').exec((err, resp) => {
+    await Event.find(query).populate({
+        path: 'userId',
+        populate: [
+          {
+            path: 'eventId',
+           
+          },
+        ],
+      }).exec((err, resp) => {
         if (err) {
             console.log('err finding', err)
         }
@@ -148,7 +156,7 @@ app.post('/getEvent', async (req, res) => {
 // other's Event
 app.post('/otherEvent', async (req, res) => {
     console.log("req.body", req.body)
-    await Event.find({ userId: { $ne: req.body.userId } }).exec((err, resp) => {
+       await Event.find({ userId: { $ne: req.body.userId } }).exec((err, resp) => {
         if (err) {
             console.log('err finding', err)
         }
@@ -163,21 +171,39 @@ app.post('/otherEvent', async (req, res) => {
     })
 })
 
+//join Event
 app.post('/joinEvent', async(req,res)=>{
+    // let newEvent = new Event()
+    // newEvent.eventTitle = req.body.title
+    // newEvent.eventVenue = req.body.venue
+    // newEvent.eventFee = req.body.fee
+    // newEvent.eventDate = req.body.date
+    // newEvent.eventTime = req.body.time
+    // newEvent.eventId = req.body.eventId 
+    // newEvent.userId = req.body.userId
     console.log("req body from join Event", req.body)
-    await Event.find({ userId: { $ne: req.body.userId } }).exec((err, resp) => {
+    // newEvent.save((err, doc) => {
+    //     console.log('err',err)
+    //     console.log('doc', doc)
+    // });
+
+    await User.findOne({_id:req.body.userId}).populate('eventId').exec(async (err, user) =>{
+        console.log('user from join',user, err)
+        
         if (err) {
             console.log('err finding', err)
         }
         else {
-            console.log('user', resp)
-            if (resp.length > 0) {
-                return res.send({ message: 'user exist', status: true, data: resp })
-            } else {
-                return res.send({ message: 'user not found', status: false, data: resp })
-            }
+            console.log('user', user)
+            let temp =[...user.eventId]
+            temp.push(req.body.eventId)
+            user.eventId = temp
+            await user.save()
         }
+        res.send({message:'done'})
     })
+
+
 })
 
 app.listen(3000, () => {
