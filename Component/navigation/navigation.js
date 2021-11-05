@@ -15,11 +15,13 @@ import { createStackNavigator } from "react-navigation-stack";
 import OtherEvent from "../Event/otherEvent";
 import Counter from "../screen/counter";
 import JoinEvent from "../Event/joinEvent";
+import Img from "../screen/img"
 
 const AuthNavigator = createStackNavigator(
   {
     Auth: Auth,
     Register: Register,
+    img:Img
     
     
   },
@@ -38,8 +40,8 @@ const DrawerNavigator = createDrawerNavigator(
     createEvent: CreateEvent,
     getEvent:GetEvent,
     otherEvent: OtherEvent,
-    joinEvent: JoinEvent,
-    counter:Counter
+    counter:Counter,
+    
  
   },
   {

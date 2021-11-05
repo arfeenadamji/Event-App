@@ -38,21 +38,6 @@ export default function ListScreen(props){
             ;
     }
 
-
-
-    // const friends = [
-    //     {name:'Friend-1' , age:'Age-20'},
-    //     {name:'Friend-2' , age:'Age-20'},
-    //     {name:'Friend-3' , age:'Age-20'},
-    //     {name:'Friend-4' , age:'Age-20'},
-    //     {name:'Friend-5' , age:'Age-20'},
-    //     {name:'Friend-6' , age:'Age-20'},
-    //     {name:'Friend-7' , age:'Age-20'},
-    //     {name:'Friend-8' , age:'Age-20'},
-    //     {name:'Friend-9' , age:'Age-20'},
-    //    {name:'Friend-10' , age:'Age-20'},
-    // ];
-    
     return(
         <ScrollView>
        

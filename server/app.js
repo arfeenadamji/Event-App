@@ -29,28 +29,26 @@ app.get('/', (req, res) => {
 app.post('/register', async (req, res) => {
     let newUser = new User()
     newUser.email = req.body.email
-    console.log('req.body', req.body)
+    console.log('user ID on Login', req.body)
     newUser.password = await bcrypt.hash(req.body.pass, 10)
     newUser.firstName = req.body.firstName
     newUser.lastName = req.body.lastName
     newUser.save((err, doc) => {
-        console.log(err)
-        console.log('doc', doc)
+        console.log('err from new user',err)
+        // console.log('doc', doc)
     });
-    console.log(req.body)
+    // console.log(req.body)
     res.send("Welcome to app")
 });
 
 //validate User
 app.post('/login', async (req, res) => {
-    // console.log("req.body123",req.body)
     await User.find({ email: req.body.email }).exec(async (err, resp) => {
         if (err) {
-            console.log('err finding', err)
+            console.log('err from validate user', err)
         }
         else {
             if (resp.length > 0) {
-                // console.log('user123',resp[0].password)
                 let ismatch = bcrypt.compareSync(req.body.pass, resp[0].password)
                 if (ismatch) {
                     return res.send({ message: 'user exist', status: true, data: resp })
@@ -69,10 +67,9 @@ app.post('/updateUser', async (req, res) => {
     console.log("req.body of updatee user", req.body)
     await User.findOneAndUpdate({ _id: req.body.id }, { ...req.body }, { new: true }).exec((err, resp) => {
         if (err) {
-            console.log('err finding from', err)
+            console.log('err from update user', err)
         }
         else {
-            console.log('user authenticate')
             console.log('user', resp)
             if (resp.length > 0) {
                 res.send({ message: 'user exist', status: true, data: resp })
@@ -113,8 +110,8 @@ app.post('/createEvent', async (req, res) => {
     newEvent.userId = req.body.userId
 
     newEvent.save((err, doc) => {
-        console.log('err form event', err)
-        console.log('doc', doc)
+        console.log('err form new event', err)
+        console.log('doc from new event', doc)
     });
     console.log(req.body)
     res.send("Welcome to app")
@@ -122,9 +119,8 @@ app.post('/createEvent', async (req, res) => {
 
 // get Event
 app.post('/getEvent', async (req, res) => {
-    console.log("req.body", req.body)
+    console.log("req.body from get Event", req.body)
     let myId = req.body.userId;
-    console.log('myId', myId)
     let query = {}
     if (myId) {
         query = { userId: myId }
@@ -137,10 +133,10 @@ app.post('/getEvent', async (req, res) => {
         ],
       }).exec((err, resp) => {
         if (err) {
-            console.log('err finding', err)
+            console.log('err finding from getEvent', err)
         }
         else {
-            console.log('user', resp)
+            console.log('user from get event', resp)
             if (resp.length > 0) {
                 res.send({ message: 'user exist', status: true, data: resp })
             } else {
@@ -172,24 +168,51 @@ app.post('/otherEvent', async (req, res) => {
 app.post('/joinEvent', async(req,res)=>{
     console.log("req body from join Event", req.body)
   await User.findOne({_id:req.body.userId}).populate('eventId').exec(async (err, user) =>{
-        console.log('user from join',user, err)      
+        console.log('user from join',user)      
         if (err) {
-            console.log('err finding', err)
+            console.log('err finding from join event', err)
         }
         else {
-            console.log('user', user)
+            // console.log('user', user)
             let temp =[...user.eventId]
             temp.push(req.body.eventId)
             user.eventId = temp
             await user.save()
         }
-        res.send({message:'done'})
+        // res.send({message:'done'})
     })
-
-
 })
 
 
+// delete Event
+app.post('/deleteEvent',async(req,res) =>{
+    console.log("req body from delete event", req.body)
+
+    if(req.body.type =='created'){
+        await Event.findOneAndDelete({_id:req.body.eventId})
+    }
+    else{
+        await User.findOne({_id:req.body.userId}).exec((err,user) =>{
+            console.log('user from join',user)      
+            if (err) {
+                console.log('err finding from delete event', err)
+            }
+            else {
+               console.log("user form delete event", user)
+            let tempIndex = user.eventId.findIndex((id) => id == req.body.eventId)
+            if(tempIndex != -1)
+            {
+                console.log(tempIndex)
+                user.eventId.splice(tempIndex,1)
+                user.save()
+            }
+
+            }
+        })
+    }
+
+
+})
 app.listen(3000, () => {
     console.log('server start')
 });

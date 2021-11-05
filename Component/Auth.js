@@ -109,20 +109,3 @@ const styles = StyleSheet.create({
     paddingTop: 50,
   },
 });
-// app.get('/getElement',async (req,res) =>{
-//   console.log("req.body",req.body)
-//   await User.find().exec((err,resp)=>{
-//       if(err){
-//           console.log('err finding',err)
-//       }
-//       else{
-//           console.log('user authenticate')
-//           console.log('user',resp)
-//           if(resp.length > 0){
-//               res.send({message:'user exist',status:true,data:resp})
-//            }else{
-//               res.send({message:'user not found',status:false,data:resp})
-//           }
-//       }
-//   })
-// })
